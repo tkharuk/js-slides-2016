@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Functions</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="../assets/css/reset.css" rel="stylesheet" type="text/css" />
+    <link href="../assets/css/fonts.css" rel="stylesheet" type="text/css" />
+    <link href="../assets/css/typography.css" rel="stylesheet" type="text/css" />
+    <link href="../assets/css/style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<div class="wrapper">
+  <header class="mainheader">
+    <div class="logo">
+      <a href="/scope_context"><span class="logotext">Scope &amp; Context</span></a>
+    </div>
+  </header>
+</div>
+
+<!-- ================== Slides ================== -->
+    <textarea id="source">
+
+class: center, middle
+
+.title[
+Front-end training
+# Scope and Context
+]
+
+???
+джаваскриптова імплементація скоупу і контексту - унікальні фічі.
+функції у багатьох контекстах.
+скоупи інкапсульовані і законсервовані.
+гнучкість але і конфюжин.
+
+контекст і скоуп - різні речі.
+інтервюшки - люди плутають.
+In JavaScript, scope refers to the current context of your code
+кожна функція має обидві штуки.
+---
+
+# What is Scope
+
+Scope is a set of variables one have access to.  
+<br />
+
+???
+- скоуп - область видимості змінних
+- набір правил з тим як шукати змінні
+- функційний. ес6 - блочний, але
+- і глобльний об"єкт
+--
+Scope is the set of rules that determines where and how a variable (identifier) can be looked-up.  
+<br />
+
+--
+JavaScript has functional scope.  
+
+---
+
+# Local and Global Scopes
+
+Variables declared outside of any function are called __global__, because they are visible throughout the program  
+<br />
+
+???
+глобальний - поза функціями і поки сторінка не закрита
+локальний - поки функція не відпрацює
+без вар - глобальна
+уникайте глобальних
+--
+Each function has its own scope, and any variable declared within that function is only accessible from that function (__local__)  
+<br />
+--
+Declaring variables without __`var`__ makes them global automatically.  
+---
+
+# Scope Chain
+Functions can be created inside other functions, producing several degrees of locality.
+
+```
+function first(){
+    second();
+    function second(){
+        third();
+        function third(){
+            fourth();
+            function fourth(){
+                // do something
+            }
+        }
+    }
+}
+first();
+fourth();
+```
+
+???
+Any function defined within another function has a local scope which is linked to the outer function - this link is called the chain.
+It’s always the position in the code that defines the scope.
+вкладені функції мають доступ до скоупу батьків
+нейм конфлікти резолвають по підніманню вгору
+http://latentflip.com/loupe/?code=ZnVuY3Rpb24gZmlyc3QoKXsKICAgIHNlY29uZCgpOwogICAgZnVuY3Rpb24gc2Vjb25kKCl7CiAgICAgICAgdGhpcmQoKTsKICAgICAgICBmdW5jdGlvbiB0aGlyZCgpewogICAgICAgICAgICBmb3VydGgoKTsKICAgICAgICAgICAgZnVuY3Rpb24gZm91cnRoKCl7CiAgICAgICAgICAgICAgICAvLyBkbyBzb21ldGhpbmcKICAgICAgICAgICAgfQogICAgICAgIH0KICAgIH0gICAKfQpmaXJzdCgpOw%3D%3D!!!PGJ1dHRvbj5DbGljayBtZSE8L2J1dHRvbj4%3D
+---
+
+# Closures
+
+Closures are functions that refers to variables from outer scopes.
+
+```
+var sayHello = function (name) {
+    var text = 'Hello, ' + name;
+    return function () {
+      console.log(text);
+    };
+};
+```
+???
+кложури - лексичний скоуп - доступ до батьківського скоупу
+закривання батьківського скоупу  - приховати і зберегти.
+складні вичислення - в кложуру;
+модуль патерн.
+---
+
+# Module Pattern
+One of the most popular types of closures is what is widely known as the module pattern
+
+```
+var Module = (function(){
+    var privateProperty = 'foo';
+
+    function privateMethod(args){
+        // do something
+    }
+
+    return {
+
+        publicProperty: '',
+
+        publicMethod: function(args){
+            // do something
+        },
+
+        privilegedMethod: function(args){
+            return privateMethod(args);
+        }
+    };
+})();
+```
+
+---
+
+# Let me to the Scope
+
+- Language-defined:  `this` and `arguments`.
+- Formal parameters: are scoped to the body of the function.
+- Function declarations: `function foo() {}`.
+- Variable declarations: `var foo;`.
+
+???
+4 способи попасти в поточний скоуп
+---
+
+# Quiz Time...
+
+```
+console.log(foo);
+{{content}}
+```
+???
+варіанти?
+
+--
+
+var foo = 7;
+{{content}}
+--
+
+function foo() {};
+
+???
+квіз.
+~20% кандидатів провалюють, навіть D2+.
+
+---
+
+# Hoisting
+ECMA: Variables are created when the execution scope is entered.  
+<br />
+--
+Regardless of where a variable is __declared__, it will be, _hoisted_ to the top of current scope.  
+
+--
+```
+var foo; // declaration
+foo = 'bar'; // initialization
+```
+???
+хоістінг,насправді, дуже проста концепція.
+декларації функцій і змінних вспливають.
+функція тягне тіло і вспливає перед змінними;
+
+---
+# Hoisting (cont.)
+
+```
+foo();
+function foo() {
+    console.log(bar);
+    if (false) {
+      var bar = 1;
+    }
+    console.log(baz);
+    return;
+    var baz = 1;
+}
+```
+???
+де в цьому прикладі буде референс еррор?
+не буде
+---
+# Hoisting (cont.)
+It doesn’t matter whether the line with the variable declaration would ever be executed.
+```
+foo();
+function foo() {
+    var bar, baz;
+    if (false) {
+      bar = 1;
+    }
+    return;
+    baz = 1;
+}
+```
+???
+лінтери - вари зверху
+---
+
+# Hoisting (cont.)
+
+```
+function foo() {
+  bar(); {{content}}
+  if (true) {
+    function bar() { return 'baz'; }
+  }
+}
+```
+???
+(сарк) і звісно ж тут також все добре буде, так?...?
+--
+// Uncaught TypeError: bar is not a function(…)
+???
+з функціями поведінка трохи відрізняється
+і відрізнятись може в залежності від платформи, тому ->
+--
+Always declare stuff at the top and never in a loop or conditional.
+
+---
+
+# Context
+
+???
+підкладають різні змінні поки не запрацює
+передають контекст як аргумент, та інші збочення
+itself - на функцію? опитати
+~40% на інтервю кажуть, але ж нелогічно, нашо?
+--
+One of the most confused mechanisms in JavaScript.  
+<br />
+???
+кожний другий туторіал починається з цієї фрази
+--
+Context is most often determined by how a function is invoked.  
+<br />
+???
+скоуп - де, контекст - як.. в якійсь мірі
+скоуп - де декларація, контекст - де виклик.. в якісь мірі
+пакет чаю в кухні і десь на райончіку в тьомному переулку
+--
+Context is always the value of the `this` keyword.  
+???
+which is a reference to the object that “owns” the currently executing code.
+
+---
+
+# Wat is Zis
+
+```
+function showThis() {
+  console.log(this);
+}
+```
+
+--
+- `window` if you simply call function:
+`showThis(); // -> window`
+
+???
+глобальний об"єкт, віндов у браузері
+стрікт мод - андефайнд
+--
+- Object, if you call function as method:
+```
+var obj = { fn: showThis };
+obj.fn(); // -> Object { fn: function }
+```
+???
+функція не була створена в обєкті але викликана з нього!!!
+
+--
+- new object, if function used as constructor:
+`new showThis(); // -> showThis {}`
+
+--
+- DOM element, if you call function as event listener:
+`document.body.onclick = showThis; // ... -> <body...`
+
+---
+
+# Call me baby
+
+???
+отже, залежить від того як викликати
+то як можна викликати функцію?
+--
+
+```
+showThis.call(context/*, comma-separated list of arguments */);
+showThis.apply(context/*, list of arguments as array */);
+```
+???
+c - coma, a - array
+--
+
+```
+var petro = {name: 'Petro'};
+{{content}}
+```
+???
+то як використати шовзіс?
+з чого ми починаємо коди писати?
+--
+showThis.call(someObj); // Object {name: "Petro"}
+???
+таку штуку часто називають викраденням методів
+---
+
+# Method Kidnapping
+
+???
+про сумну історію...
+--
+```
+var gangsta = {
+    money: 20,
+    takeMoney: function(victim) {
+        this.money += victim.giveMoney();
+    }
+}
+
+var petro = {
+    money: 75,
+    giveMoney: function() {
+        var amount = this.money;
+        this.money = 0;
+        return amount;
+    }
+}
+
+gangsta.takeMoney(petro);
+```
+???
+але петро не плаче! навпаки, йому сподобалась ідея легкого заробітку
+то що допоможе йому, як йому навчитись відбирати гроші?
+--
+```
+gangsta.takeMoney.call(petro, vasyl);
+```
+???
+за одну лінійку коду, петро практично став гангстером!!
+2pac - hit em up
+насправді називають позичанням методів
+---
+
+# Method Borrowing
+
+???
+ітерабли - методи масиву
+треба написати функцію яка приймає ДОВІЛЬНУ кількість формальних параметрів
+arguments - об"єкт який схожий на масив
+--
+
+```
+sum(1, 9); // 10
+sum(1, 2, 3); // 6
+
+{{content}}
+```
+--
+function sum() {
+    return [].reduce.call(arguments, function(comp, curr) {
+        return comp + curr;
+    }, 0);
+}
+
+???
+ES5 - 2009!
+NodeList, FileList, etc
+--
+
+```
+function isWordPalindrome(word) {
+    return word === [].slice.call(word).reverse().join('');
+}
+```
+???
+позичати можна тільки рідонлі методи
+
+---
+
+# Callbacks have this problem
+
+```
+...
+getData: function() {
+    $.getJSON('/api/assets', this.onGetData);
+},
+onGetData: function(data) {
+    this.stopLoader();
+  . ..
+}
+{{content}}
+```
+
+--
+...
+// somewhere in $ library
+xhr.onreadystatechange = function() {
+    // some checks, blah, blah
+    ourCallback(xhr.responseText);
+}
+
+--
+
+```
+getData: function() {
+    var self = this;
+
+    $.getJSON('/api/assets', function(data) {
+        self.onGetData(data);
+    });
+}
+```
+
+---
+
+# Closures
+
+???
+тааак, апять кложури?
+потужний інструмент
+--
+
+```
+function bind(fn, ctx) {
+    return function() {
+      return fn.apply(ctx, arguments);
+    };
+}
+
+{{content}}
+```
+
+--
+var getValue = function() { return this.value }
+var charlie = { value: 'charlie' };
+var getCharlieValue = bind(getValue, charlie);
+
+{{content}}
+
+--
+getCharlieValue(); // -> 'charlie'
+getCharlieValue.call({ value: 'miranda' }); // -> 'charlie'
+getCharlieValue.call(null); // -> 'charlie'
+
+---
+
+# Bind that this
+
+--
+`Function.prototype.bind`
+<br />
+Bind does not call function immediately, it returns a new function with "bound" context.
+
+???
+повертає функцію а не викликає
+ES5 - 2009 !
+
+--
+
+```
+// ...
+var getCharlieValue = getValue.bind(charlie);
+```
+
+---
+
+# Bind that callback
+
+```
+...
+getData: function() {
+    $.getJSON('/api/assets', this.onGetData.bind(this));
+},
+...
+```
+
+???
+часто коли люди дізнаються про байнд - байндять все підряд
+---
+
+class: center, middle
+
+# Thank You!
+### Questions?
+
+---
+
+# References
+
+- http://www.adequatelygood.com/JavaScript-Scoping-and-Hoisting.html
+- http://ryanmorr.com/understanding-scope-and-context-in-javascript/
+- http://javascriptplayground.com/blog/2012/04/javascript-variable-scope-this/
+- http://adripofjavascript.com/blog/drips/using-javascripts-array-methods-on-strings.html
+
+    </textarea>
+<!-- ================== End of Slides ================== -->
+
+    <script src="../assets/js/remark-latest.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+      remark.create({
+        highlightStyle: 'github',
+        highlightLanguage: 'javascript',
+        highlightLines: true,
+        countIncrementalSlides: false
+      });
+    </script>
+</body>
+</html>
