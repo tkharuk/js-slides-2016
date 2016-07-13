@@ -342,7 +342,7 @@ var petro = {name: 'Petro'};
 то як використати шовзіс?
 з чого ми починаємо коди писати?
 --
-showThis.call(someObj); // Object {name: "Petro"}
+showThis.call(petro); // Object {name: "Petro"}
 ???
 таку штуку часто називають викраденням методів
 ---
@@ -360,7 +360,7 @@ var gangsta = {
     }
 }
 
-var petro = {
+var john = {
     money: 75,
     giveMoney: function() {
         var amount = this.money;
@@ -369,17 +369,17 @@ var petro = {
     }
 }
 
-gangsta.takeMoney(petro);
+gangsta.takeMoney(john);
 ```
 ???
-але петро не плаче! навпаки, йому сподобалась ідея легкого заробітку
+але john не плаче! навпаки, йому сподобалась ідея легкого заробітку
 то що допоможе йому, як йому навчитись відбирати гроші?
 --
 ```
-gangsta.takeMoney.call(petro, vasyl);
+gangsta.takeMoney.call(john, bruce);
 ```
 ???
-за одну лінійку коду, петро практично став гангстером!!
+за одну лінійку коду, john практично став гангстером!!
 2pac - hit em up
 насправді називають позичанням методів
 ---
