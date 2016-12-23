@@ -1,7 +1,22 @@
+:root {
+    --white: white;
+    --white-50: rgba(255, 255, 255, 0.5);
+    --grey-lightest: #f8f8f8;
+    --grey-light: rgb(160, 160, 160);
+    --grey-dark: #333;
+    --black-20: rgba(0, 0, 0, 0.2);
+
+    --headlines-background-color: #ffc107;
+    --logo-hover-color: #C59400;
+    --headlines-color: #f54337;
+    --content-background-color: var(--white);
+    --anchor-hover-color: #a70c00;
+}
+
 h1, h2, h3 {
     font-family: 'source_sans_proregular';
     font-weight: normal;
-    color: rgb(26, 156, 176);
+    color: var(--headlines-color);
 }
 h1 {
     font-size: 18px;
@@ -36,25 +51,24 @@ dd {
 }
 .wrapper .mainheader {
     height: 58px;
+    background-color: var(--headlines-background-color);
 }
 .wrapper .logo {
-    background-color: rgb(57, 194, 215);
-    height: inherit;
+    display: inline-flex;
+    align-items: center;
+    height: 100%;
 }
-.wrapper .divider {
-    border-right: 1px solid rgba(255, 255, 255, .5);
-    padding: 0 15px;
-    height: 32px;
-    float: left;
-    margin-top: 13px;
-}
+
 .wrapper .logo a {
+    display: inline-block;
+    padding: 0 15px;
+    font: 20px/2.5 "source_sans_proregular";
+    text-transform: uppercase;
     text-decoration: none;
+    color: var(--white);
 }
-.wrapper .logo span {
-    padding-left: 15px;
-    color: rgb(255, 255, 255);
-    line-height: 58px;
+.wrapper .logo a + a {
+    border-left: 1px solid var(--white-50);
 }
 .wrapper .content {
     padding: 25px 44px;
@@ -62,7 +76,7 @@ dd {
 .wrapper .lectures {
     counter-reset: li;
     list-style: none;
-    color: rgb(26, 156, 176);
+    color: var(--headlines-color);
 }
 .wrapper .lectures a:before {
     content: counter(li, decimal-leading-zero)'. ';
@@ -73,26 +87,24 @@ dd {
 }
 .wrapper .lectures li a {
     cursor: pointer;
-    color: rgb(26, 156, 176);
+    color: var(--headlines-color);
 }
 .wrapper .lectures li a:visited {
-    color: rgb(26, 156, 176);
+    color: var(--headlines-color);
 }
 .wrapper .lectures li a:hover {
     text-decoration: none;
-    color: rgb(160, 160, 160);
+    color: var(--anchor-hover-color);
 }
-.remark-slides-area {}
 .remark-slide-content p, .remark-slide-content li {
     font-family: 'source_sans_proregular';
     line-height: 1.2;
 }
 .remark-slide a {
-    color: rgb(26, 156, 176);
+    color: var(--headlines-color);
 }
-.remark-slide-number {}
 .remark-slide-container {
-    background: white;
+    background: var(--content-background-color);
 }
 .remark-slide-scaler {
     box-shadow: none;
@@ -109,7 +121,6 @@ ul {
 }
 .remark-slides-area {
     height: calc(100% - 55px);
-    /* 55:) - header */
 }
 img {
     max-width: 100%;
@@ -190,12 +201,12 @@ img {
 .demo {
     position: relative;
     padding: 1em 30px !important;
-    box-shadow: 0 2px 8px 2px rgba(0, 0, 0, 0.2) inset;
+    box-shadow: 0 2px 8px 2px var(--black-20) inset;
 }
 .demo:before {
     content: 'Demo:';
     margin-bottom: 1px;
-    background: rgb(57, 194, 215);
+    background: var(--headlines-background-color);
     position: absolute;
     bottom: 100%;
     left: 0px;
@@ -213,8 +224,8 @@ img {
 }
 .remark-inline-code {
     font-size: 18px;
-    color: #333;
-    background: #f8f8f8;
+    color: var(--grey-dark);
+    background:var(--grey-lightest);
 }
 .remark-code-line {
     padding-bottom: 5px;
@@ -233,7 +244,7 @@ img {
     margin-top: -5em;
 }
 .title p {
-    color: #999;
+    color: var(--grey-light);
     font-style: italic;
     margin-bottom: 0;
 }
