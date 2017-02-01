@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CSS: Modern</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="../../assets/css/reset.css" rel="stylesheet" type="text/css" />
+    <link href="../../assets/css/fonts.css" rel="stylesheet" type="text/css" />
+    <link href="../../assets/css/typography.css" rel="stylesheet" type="text/css" />
+    <link href="../../assets/css/style.css" rel="stylesheet" type="text/css" />
+    <link href="fonts/roboto_black_macroman/stylesheet.css" rel="stylesheet" type="text/css" />
+    <link href="fonts/roboto_light_macroman/stylesheet.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<div class="wrapper">
+    <header class="mainheader">
+        <div class="logo">
+            <a href="../index.html">WEB-UI</a>
+            <a href="./">CSS: Modern</a>
+        </div>
+    </header>
+</div>
+
+<!-- ================== Slides ================== -->
+    <textarea id="source">
+
+
+class: center, middle
+
+.title[
+Front-end training
+# CSS: Modern
+]
+
+
+---
+
+# What’s New in CSS3?
+
+CSS3 is the third generation of the CSS specification recommendations from the W3C. 
+In CSS3 there are new selectors, pseudo-elements and classes, properties, and 
+values specifically created to answer the needs and solve the problems of modern web design and development.
+<br/><br/>
+.center[[Browsers support](http://caniuse.com/#search=css3)]
+
+---
+
+# CSS3 Browser Compatibility
+
+- Many properties are browser-specific, requiring vendor prefixes
+- Plus there is a standard property
+- There are syntax differences between browser-specific properties and the standard property
+
+**Note**: You get not valid css code :(  
+<br />
+**Ideally:**
+```css
+a.polaroid {
+  box-shadow: 0px 0px 4px 0px #fff;
+  transform: rotate(7.5deg);  /* Firefox 16+, IE 10+, Opera */
+}
+```
+
+**Reality:**
+```css
+a.polaroid {
+  -webkit-box-shadow: 0px 0px 4px 0px #fff; /* Android 2.3+, iOS 4.0.2-4.2, Safari 3-4 */
+          box-shadow: 0px 0px 4px 0px #fff; /* Chrome 6+, Firefox 4+, IE 9+, iOS 5+, Opera 10.50+ */
+  -webkit-transform: rotate(7.5deg);  /* Chrome, Opera 15+, Safari 3.1+  */
+      -ms-transform: rotate(7.5deg);  /* IE 9 */
+          transform: rotate(7.5deg);  /* Firefox 16+, IE 10+, Opera */
+}
+```
+
+---
+
+# CSS3 & Cross-browser Coding
+
+- fallback
+- Place browser-specific properties first
+- Place default properties ahead of browser-specific properties
+- The standard properties will override the vendor’s when the standard is established.
+
+```css
+.gradient {
+  background: #f0f9ff; /* Old browsers */
+  background: -moz-linear-gradient(top,  #f0f9ff 0%, #a1dbff 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f0f9ff), color-stop(100%,#a1dbff)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  #f0f9ff 0%,#a1dbff 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  #f0f9ff 0%,#a1dbff 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  #f0f9ff 0%,#a1dbff 100%); /* IE10+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f0f9ff', endColorstr='#a1dbff',GradientType=0 ); /* IE6-9 */
+  background: linear-gradient(to bottom,  #f0f9ff 0%,#a1dbff 100%); /* W3C */
+}
+```
+- https://css-tricks.com/ordering-css3-properties/
+- http://stackoverflow.com/questions/7080605/ordering-of-vendor-specific-css-declarations
+
+---
+
+# CSS3 Generators
+
+- [http://css3please.com](http://css3please.com)
+- [http://css3generator.com](http://css3generator.com)
+- [http://www.css3maker.com](http://www.css3maker.com)
+- [http://www.colorzilla.com/gradient-editor](http://www.colorzilla.com/gradient-editor)
+- [http://csscorners.com](http://csscorners.com)
+- [http://border-image.com](http://border-image.com)
+
+---
+
+# Helper Scripts
+
+These scripts help IE lt8 behave like CSS3-compliant browsers. However, support of CSS3 properties varies between scripts.
+
+.columns[.col-50[
+  **ie-7.js** (includes IE8 and IE9)  
+  [http://code.google.com/p/ie7-js/](http://code.google.com/p/ie7-js/)
+
+  ![ie-7.js](assets/img/ie7-js.jpg)
+].col-50[
+  **CSS3Pie.com**  
+  [http://css3pie.com/](http://css3pie.com/)
+
+  ![css3pie](assets/img/css3pie.jpg)
+]]
+
+---
+
+# Colors in CSS3
+
+.columns[.col-50[
+  Regular RGB:
+  ```css
+  color: rgb(255, 0, 0);
+  ```
+
+  RBG with alpha-opacity:
+  ```css
+  color: rgba(255, 0, 0, 0.2);
+  ```
+
+  ![RGB](assets/img/rgb-wheel.jpg)
+].col-50[
+  Regular HSL:
+  ```css
+  color: hsl(0, 100%, 50%)
+  ```
+
+  HSL with alpha-opacity:
+  ```css
+  color: hsla(0, 100%, 50%, 0.5);
+  ```
+
+  ![HSLA](assets/img/hsla-wheel.jpg)
+]]
+
+---
+# Webfonts: Formats
+.center[
+    <img src="assets/img/fonts-formats.png" alt="">
+    ]
+---
+
+# Webfonts: Declaration
+
+```css
+@font-face {
+    font-family: 'robotoblack';
+    src: url('Roboto-Black-webfont.eot'); /* IE9 Compat Modes */
+    src: url('Roboto-Black-webfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('Roboto-Black-webfont.woff') format('woff'), /* Super Modern Browsers */
+         url('Roboto-Black-webfont.ttf') format('truetype'), /* Pretty Modern Browsers */
+         url('Roboto-Black-webfont.svg#robotoblack') format('svg'); /* Legacy iOS */
+    font-weight: normal;
+    font-style: normal;
+}
+h1 {
+  font-family: 'robotoblack';
+}
+```
+Alternative:
+```css
+@font-face {
+  font-family: 'MyWebFont';
+  src:  url('myfont.woff2') format('woff2'),
+        url('myfont.woff') format('woff');
+}
+```
+---
+
+<style>
+  .roboto_black_macroman { font-family: robotoblack; }
+  .roboto_light_macroman { font-family: robotolight; }
+</style>
+# Webfonts: Usage
+
+Example:
+
+.columns[.col-50[
+  .roboto_black_macroman[ roboto black]
+
+  ```css
+  .roboto_black_macroman {
+    font-family: robotoblack;
+  }
+  ```
+].col-50[
+  .roboto_light_macroman[ roboto light]
+
+  ```css
+  .roboto_light_macroman {
+    font-family: robotolight;
+  }
+  ```
+]]
+
+---
+
+# Webfont Services
+
+- http://www.fontsquirrel.com
+- http://www.typekit.com
+- http://www.fonts.com/web-fonts
+- https://www.google.com/fonts
+
+---
+
+# Border Radius
+
+- Allows web developers to easily utilize rounder corners in their design elements.
+- IE lt8 does not support
+
+```css
+.box { border-radius: 10px; }
+.box { border-radius: 10px 20px 10px 15px; }
+.box { border-radius: 10px 20px 10px 15px / 10px 20px 10px 15px; }
+.circle { border-radius: 50%; }
+.corner { border-top-left-radius: 40px; }
+```
+![border radius](assets/img/border-radius.jpg)
+
+---
+
+# Border Radius (cont.)
+![border radius](assets/img/css_border-radius_1.png)
+
+[Live](http://jsbin.com/yevevux/6/edit?html,output)
+---
+
+# Opacity
+
+- IE lt8 does not support. There is a filter: opacity for then
+- filters can be skipped if only ie9+ support is required
+
+```css
+.semi {
+    opacity: 0.5;
+ }
+.block {
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(opacity=20)"; /* IE8 only */
+  filter: progid:DXImageTransform.Microsoft.Alpha(opacity=20); /* IE6, IE7, and IE8 */
+  opacity: 0.2;
+}
+```
+
+![opacity](assets/img/opacity.jpg)
+
+---
+
+# Box Shadow
+
+- Allows to easily implement multiple drop shadows (outer or inner) on box elements
+
+Formal syntax:
+```css
+box-shadow: none | [inset? && [ <offset-x> <offset-y> <blur-radius>? <spread-radius>? <color>? ] ]
+```
+```css
+/* offset-x | offset-y | color */
+box-shadow: 60px -16px teal;
+
+/* offset-x | offset-y | blur-radius | color */
+box-shadow: 10px 5px 5px black;
+
+/* offset-x | offset-y | blur-radius | spread-radius | color */
+box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+
+/* inset | offset-x | offset-y | color */
+box-shadow: inset 5em 1em gold;
+
+/* Any number of shadows, separated by commas */
+box-shadow: 3px 3px red, -1em 0 0.4em olive;
+```
+
+---
+# Box Shadow (cont.)
+
+.center[
+<img src="assets/img/box-shadow-3.png" alt="" height="500px">
+]
+[Spread](http://jsbin.com/henimog/1/edit?html,output)
+---
+
+
+
+# Box Shadow (cont.)
+
+- IE lt8 does not support
+
+```css
+.box_shadow {
+  -webkit-box-shadow: 0px 0px 4px 0px #ffffff; /* Android 2.3+, iOS 4.0.2-4.2, Safari 3-4 */
+  box-shadow: 0px 0px 4px 0px #ffffff; /* Chrome 6+, Firefox 4+, IE 9+, iOS 5+, Opera 10.50+ */
+}
+```
+
+With fix for IE:
+```css
+.boxshadow {
+  -webkit-box-shadow: 3px 3px 10px #333 inset;
+  box-shadow: 3px 3px 10px #333 inset; /* standard */
+  -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#333333')"; /* For IE 8 */
+  filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#333333'); /* For IE 5.5 - 7 */
+}
+```
+
+---
+
+# Text Shadow
+
+- IE lt8 does not support, nor does IE9
+- could use the IE filter: shadow
+
+Formal syntax:
+```css
+text-shadow: none | [ <offset-x> <offset-y> <blur-radius>? <color>? ]
+```
+```css
+.textshadow {
+  text-shadow: 1px 1px 2px rgba(48, 80, 82, 0.8);
+}
+```
+
+With fix for IE:
+
+```css
+.textshadow {
+  text-shadow: 1px 1px 2px rgba(48, 80, 82, 0.8);
+  -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=2, Direction=135, Color='#305052')"; /* For IE 8+ */
+  filter: progid:DXImageTransform.Microsoft.Shadow(Strength=2, Direction=135, Color='#305052'); /* For IE 5.5 -7 */
+}
+```
+
+---
+
+<style>
+  .white-with-blue-shadow {
+    text-shadow: 1px 1px 2px black, 0 0 1em blue, 0 0 0.2em blue;
+    color: white;
+    font: 1.5em Georgia, "Bitstream Charter", "URW Bookman L", "Century Schoolbook L", serif;
+  }
+</style>
+# Text Shadow (cont.)
+
+```css
+.white-with-blue-shadow {
+    text-shadow: 1px 1px 2px black, 0 0 1em blue, 0 0 0.2em blue;
+    color: white;
+    font: 1.5em Georgia, "Bitstream Charter", "URW Bookman L", "Century Schoolbook L", serif;
+  }
+```
+<br>
+.example.white-with-blue-shadow[
+<p class="white-with-blue-shadow">
+   Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore
+   veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+</p>
+]
+
+---
+# Text Overflow
+
+Specifies what should happen when text overflows the containing element
+
+Formal syntax:
+```css
+text-overflow: [ clip | ellipsis | <string> ]{1,2}
+```
+Possible values
+
+- `ellipsis` Display ellipses to represent clipped text
+- `clip` Default value, clips text
+- `string` Custom string which will be render in end of clipped string
+
+```css
+.text {
+  text-overflow: ellipsis;
+}
+```
+
+---
+### Text Overflow (cont.)
+```css
+.ellipsis {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 100px;
+}
+```
+<style>
+  p {
+
+  }
+  .ellipsis {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 400px;
+    border: 1px solid gray;
+    border-radius: 8px;
+  }
+</style>
+<p class="ellipsis">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad, cum dolor ea earum fuga harum incidunt iste molestiae quae totam. Facilis fugiat, itaque laboriosam laborum nostrum quibusdam sunt veniam voluptates.</p>
+
+```css
+.clip {
+  text-overflow: clip;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 100px;
+}
+```
+<style>
+  .clip {
+    text-overflow: clip;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 400px;
+    border: 1px solid gray;
+    border-radius: 8px;
+  }
+</style>
+<p class="clip">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad, cum dolor ea earum fuga harum incidunt iste molestiae quae totam. Facilis fugiat, itaque laboriosam laborum nostrum quibusdam sunt veniam voluptates.</p>
+
+---
+
+# Gradient Background
+
+- Gradients are smooth transitions between two or more specified colors
+- Use of CSS gradients can replace images and reduce download time
+- Create a more flexible layout, and look better while zooming
+
+<div style="margin: 40px auto; width: 400px; height: 400px; background: linear-gradient(135deg, red, blue);"></div>
+]
+
+---
+
+# Gradient Background (cont.)
+- linear gradient
+```css
+background: linear-gradient(135deg, red, blue);
+```
+<div style="margin: 40px auto; width: 300px; height: 300px; background: linear-gradient(135deg, red, blue);"></div>
+
+---
+
+# Gradient Background (cont.)
+- linear gradient
+```css
+background: linear-gradient(to right, red, blue);
+```
+<div style="margin: 40px auto; width: 300px; height: 300px; background: linear-gradient(to right, red, blue);"></div>
+---
+
+# Gradient Background (cont.)
+- linear gradient
+```css
+background: linear-gradient(to bottom right, red, red 80%, blue);
+```
+<div style="margin: 40px auto; width: 300px; height: 300px; background: linear-gradient(to bottom right, red, red 80%, blue);"></div>
+---
+
+# Gradient Background (cont.)
+- cross-browser linear gradient
+```css
+.grad {
+  background-color: #F07575; /* fallback color if gradients are not supported */
+  background-image: -webkit-linear-gradient(top, hsl(0, 80%, 70%), #bada55); /* For Chrome 25 and Safari 6, iOS 6.1, Android 4.3 */
+  background-image:    -moz-linear-gradient(top, hsl(0, 80%, 70%), #bada55); /* For Firefox (3.6 to 15) */
+  background-image:      -o-linear-gradient(top, hsl(0, 80%, 70%), #bada55); /* For old Opera (11.1 to 12.0) */
+  background-image:         linear-gradient(to bottom, hsl(0, 80%, 70%), #bada55); /* Standard syntax; must be last */
+}
+```
+---
+
+# Gradient Background (cont.)
+- radial gradient
+```css
+background: background: radial-gradient(
+      circle at top right,
+      yellow,
+      #f06d06
+    );
+```
+.center[
+<div style="margin: 40px auto; width: 400px; height: 300px; background: radial-gradient(
+      circle at top right,
+      yellow,
+      #f06d06
+    );"></div>
+]
+---
+# Gradient Background (cont.)
+- repeating gradient
+```css
+background: repeating-linear-gradient(
+      45deg,
+      yellow,
+      yellow 10px,
+      red 10px,
+      red 20px /* determines size */
+    );
+```
+.center[
+<div style="margin: 40px auto; width: 400px; height: 200px; background: repeating-linear-gradient(
+      45deg,
+      yellow,
+      yellow 10px,
+      red 10px,
+      red 20px /* determines size */
+    );"></div>
+]
+
+---
+# Gradient Background (cont.)
+
+- Multiply breakpoints could be used
+- Colors with opacity could be used
+
+.columns[.col-50[
+  ![gradient 1](assets/img/gradient-1.jpg)
+].col-50[
+  ![gradient 2](assets/img/gradient-2.jpg)
+]]
+
+---
+
+# Border Image
+
+- Defines an image to be used instead of the normal border of an element.
+- IE lt11 does not support
+
+Formal syntax:
+```css
+border-image: none | [ <URL> [<number> | <percent>]{1,4} [/ <width>{1,4}]? ]
+              && [stretch | repeat | round]{0,2}
+```
+Common syntax
+```css
+/* border-image-source | border-image-slice | border-image-slice | border-image-repeat */
+border-image: url("/images/border.png") 30 30 repeat;
+border-image: url("/images/border.png") 30 30 stretch;
+```
+
+---
+<style>
+  .border-img {
+    background-size: 4em;
+    text-align: center;
+    font-size: 15px;
+  }
+  .border-img.text {
+    margin-top: 2em;
+    box-sizing: border-box;
+
+    border: 3em solid yellow;
+    border-image: radial-gradient(rgba(0,0,0,.5) ,rgba(255,255,255,0) 45%) 25% 33% 40% 25%;
+  }
+  .border-img .text-inner {
+    padding: 2em;
+    background: white;
+  }
+</style>
+
+### border-image-source
+
+<div class="text border-img">
+      <div class="text-inner">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec consectetur odio sem, vel volutpat felis accumsan sit amet. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aliquam ac augue eu mi lacinia egestas.</div>
+</div>
+
+---
+
+### Border image slice
+
+An important property that determines the size of the image pieces that fill the corners of the frame.
+The remaining part of border-image will be used to fill the space between the corners of the algorithm set in the `border-image-repeat`.
+.center[
+<img src="assets/img/border-image-slice.png" alt="" width="400" align="middle">
+]
+
+---
+
+### Border image slice
+- `<Percentage>` - calculated with respect to the image size. Horizontal is relative to width of image, vertical is relative to height.
+- `<Number>` - pixels (for bitmap images) or coordinates (for vector). Units are not listed.
+
+---
+
+
+### Border image repeat
+
+It specifies how to be filled in the gaps between the corners.
+
+Possible values are:
+- `stretch` - stretch the filling portion pictures. The default value;
+- `repeat` - repeats the filling portion;
+---
+
+### Border image
+.columns[.col-100[
+```html
+<img src="http://img-fotki.yandex.ru/get/3102/yoksel.31/0_1d0a3_1b360496_M.jpg" alt="" class="indian">
+```
+```css
+.indian {
+  border: 90px solid transparent;
+  border-image: url(http://url-path.png) 14% 20% stretch round;
+}
+
+```
+].col-100[
+<a href="http://jsbin.com/homerat/10/edit?css,output">
+  <img src="http://img-fotki.yandex.ru/get/9165/5091629.99/0_7eb49_5c917238_XL.png" height="300" align="center" alt="">
+  <img src="http://img-fotki.yandex.ru/get/3102/yoksel.31/0_1d0a3_1b360496_M.jpg" alt="">
+</a>
+]]
+
+
+---
+
+
+
+# Multiple Backgrounds
+- The backgrounds are shown according to the order listed, with the first background image listed is the - one “on top”and the rest stack underneath it.
+- Can use CSS3 gradients (which are like background images) in conjunction with multiple background images.
+- IE lt8 does not support
+```css
+myclass {
+  background: background1, background 2, ..., backgroundN;
+}
+```
+```css
+body {
+  background-color: #5ABBCF;
+  background: #5ABBCF url(../images/bokeh1.png) no-repeat; /* fallback image */
+  background: url(../images/bokeh4.png) no-repeat, 
+              url(../images/bokeh3.png) no-repeat 10% 0, 
+              url(../images/bokeh2.png) no-repeat 20% 0, 
+              url(../images/bokeh1.png) no-repeat, 
+              url(../images/glow.png) no-repeat 90% 0;
+}
+```
+
+
+
+---
+
+
+
+# Multiple Backgrounds
+
+```css
+.multi_bg_example {
+  width: 100%;
+  height: 400px;
+  background-image: url(https://mdn.mozillademos.org/files/11305/firefox.png), url(https://mdn.mozillademos.org/files/11307/bubbles.png), linear-gradient(to right, rgba(30, 75, 115, 1), rgba(255, 255, 255, 0));
+  background-repeat: no-repeat, no-repeat, no-repeat;
+  background-position: bottom right, bottom left, right;
+}
+```
+
+<div class="multi_bg_example" style="
+    width: 100%;
+    height: 300px;
+    background-image: url('https://mdn.mozillademos.org/files/11305/firefox.png'), url('https://mdn.mozillademos.org/files/11307/bubbles.png'), linear-gradient(to right, rgba(30, 75, 115, 1), rgba(255, 255, 255, 0));
+    background-repeat: no-repeat, no-repeat, no-repeat;
+    background-position: bottom right, bottom left, right;"
+></div>
+
+---
+
+# Background Size
+
+You can set the size of a background image and make sure it covers the entire background of a page, no matter what the size.
+
+**`<length>`** scales the background image to the specified length in the corresponding dimension
+**`<percentage>`** scales the background image in the corresponding dimension to the specified percentage of the background positioning area
+
+```css
+.box_bgsize {
+  background-size: 100px 100px;
+}
+
+.box_bgsize {
+  background-size: 100% 100%;
+}
+
+```
+
+---
+
+# Background Size
+
+###contain
+
+always fits the entire image within your viewport, leaving opaque borders on either the top-bottom or the left-right whenever the ratio of the background image and browser window are not the same.
+<div style="
+width: 820px;
+height: 300px;
+border: 1px solid black;
+margin-bottom: 1em;
+background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/652/ferns-unsplash.jpg);
+background-repeat: no-repeat;
+background-size: contain;
+"></div>
+---
+
+
+# Background Size
+
+###cover
+
+ always fills the target area. You can control how your image is aligned within the viewport by using the background-position property.
+<div style="
+width: 820px;
+height: 300px;
+border: 1px solid black;
+margin-bottom: 1em;
+background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/652/ferns-unsplash.jpg);
+background-repeat: no-repeat;
+background-size: cover;
+"></div>
+---
+
+### 2D Transformations
+
+<img src="assets/img/axis-2d.png" width="500" alt="">
+---
+
+### 2D Transformations
+
+Different kinds of transforms:
+
+- rotate
+- scale
+- skew
+- translate
+- matrix => matrix(scaleX(),skewY(),skewX(),scaleY(),translateX(),translateY())
+
+```css
+.picture:hover {
+          transform: translate(-50%, -50%) scale(2) rotate(45deg);
+}
+```
+---
+
+### 2D Transformations
+Examples:
+
+.columns[.col-50[
+  ![2d transforms 1](assets/img/2d-transforms-1.jpg)
+].col-50[
+  ![2d transforms 2](assets/img/2d-transforms-2.jpg)
+]]
+
+
+
+---
+<style>
+  .box-tr-or {
+    background: lightblue;
+    width: 200px;
+    height: 200px;
+    margin: 0 auto;
+    transition: transform 1s linear;
+  }
+
+  .box-tr-or:hover {
+    transform: rotate(360deg);
+  }
+  .box-tr-or-1 {
+    transform-origin: top left;
+  }
+</style>
+
+### 2D Transformations
+
+### Transform-origin
+
+.columns[.col-50[
+
+  <div class="box-tr-or"></div>
+
+].col-50[
+```css
+  .box-tr-or {
+    background: lightblue;
+    width: 200px;
+    height: 200px;
+  }
+  .box-tr-or:hover {
+    transform: rotate(360deg);
+  }
+```
+]]
+<br><br>
+.columns[.col-50[
+
+  <div class="box-tr-or box-tr-or-1"></div>
+
+].col-50[
+```css
+  .box-tr-or-1 {
+    transform-origin: top left | 0 0;
+  }
+```
+]]
+
+---
+### 3D Transformations
+
+<img src="assets/img/axis-3d.gif" alt="">
+
+---
+### 3D Transformations
+
+### Perspective
+
+```css
+.container {
+  perspective: none | <number>
+}
+```
+<br><br>
+<img src="assets/img/perspective.png" alt="">
+
+---
+### 3D Transformations
+
+
+- [rotateX( angle )](http://jsbin.com/jabepuy/8/embed?css,output)
+- [rotateY( angle )](http://jsbin.com/jabepuy/9/embed?css,output)
+- [rotateZ( angle )](http://jsbin.com/jabepuy/10/embed?css,output)
+- [translateZ( tz )](http://codepen.io/agelber/pen/wAgzI?editors=1100)
+- [scaleZ( sz )](http://jsbin.com/jabepuy/22/embed?html,css,output)
+- [translate3d( tx, ty, tz )](http://jsbin.com/jabepuy/24/embed?css,output)
+- [scale3d( sx, sy, sz )](http://jsbin.com/jabepuy/25/embed?css,output)
+- [rotate3d( rx, ry, rz, angle )](http://jsbin.com/jabepuy/28/embed?css,output)
+- https://webkit.org/blog-files/3d-transforms/morphing-cubes.html
+
+---
+<style>
+  .element-animation {
+    border-radius: 15px;
+    width: 500px;
+    height: 150px;
+    margin: 0 auto;
+  }
+  .element-animation {
+    animation: pulse 5s alternate infinite;
+  }
+
+  @keyframes pulse {
+    0% {
+      background-color: #001F3F;
+    }
+    100% {
+      background-color: #FF4136;
+    }
+  }
+</style>
+
+
+### Animation
+
+Example of animation properties:
+```css
+.element {
+  animation: pulse 5s infinite, animationName  5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    background-color: #001F3F;
+  }
+  100% {
+    background-color: #FF4136;
+  }
+}
+```
+
+<div class="element-animation"></div>
+
+---
+
+### Animation
+
+.columns[.col-50[
+
+```css
+@keyframes stretch {
+  /* declare animation actions here */
+}
+
+.element {
+  animation-name: stretch;
+  animation-duration: 1.5s;
+  animation-timing-function: ease-out;
+  animation-delay: 0;
+  animation-direction: alternate;
+  animation-iteration-count: infinite;
+  animation-fill-mode: none;
+  animation-play-state: running;
+}
+```
+].col-50[
+
+```css
+/*  is the same as: */
+
+
+.element {
+  animation:
+    stretch
+    1.5s
+    ease-out
+    0
+    alternate
+    infinite
+    none
+    running;
+}
+```
+]]
+
+
+
+---
+
+### Animation
+Examples:
+
+.columns[.col-50[
+  ![CSS animation 1](assets/img/animation-1.gif)
+].col-50[
+  ![CSS animation 2](assets/img/animation-2.gif)
+]]
+
+---
+
+### Animation
+
+[Which properties can be animated?](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_animated_properties)
+
+---
+
+### Transitions
+
+You can create subtle transitions between hover states on elements. The transitions smooth out visual jumps.
+
+Syntax: `transition: [property] [duration] [timing-function] [delay];`
+
+```css
+.box_transition {
+  height: 200px;
+  opacity: 0;
+  transition: all 0.3s ease-in-out;
+}
+
+.box_transition:hover {
+  height: 500px;
+  opacity: 1;
+}
+```
+
+---
+<style>
+  .transition-wrapper{
+    width: 300px;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #333;
+    font-family: 'Lato', sans-serif;
+  }
+  .box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 150px;
+    height: 150px;
+    background-color: red;
+    color: white;
+    box-shadow: 5px 5px 25px #000;
+    overflow: hidden;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all 1s;
+  }
+  .box .box__blurb {
+    opacity: 1;
+    transform: translateX(45px);
+    transition: opacity 0.5s 2s, transform 0.5s 0.5s;
+  }
+  .box .rect__blurb {
+    opacity: 0;
+    transform: translateX(500px);
+    transition: opacity 0.5s 1s, transform 0.5s 1s;
+  }
+  .box:hover {
+    width: 300px;
+    background-color: orange;
+    box-shadow: -5px 5px 25px #000;
+  }
+  .box:hover .box__blurb {
+    opacity: 0;
+    transform: translateX(-500px);
+  }
+  .box:hover .rect__blurb {
+    opacity: 1;
+    transform: translateX(-100px);
+  }
+</style>
+
+.columns[.col-40[
+                    <div class="transition-wrapper">
+  <div class="box">
+  <span class="box__blurb">I'm a Box</span>
+  <span class="rect__blurb">I'm a Rectangle</span>
+</div>
+</div>
+].col-60[
+```css
+.box {
+    width: 150px;
+    transition: all 1s;}
+
+  .box .box__blurb {
+    opacity: 1;
+    transform: translateX(45px);
+    transition: opacity 0.5s 2s, transform 0.5s 0.5s;}
+
+  .box .rect__blurb {
+    opacity: 0;
+    transform: translateX(500px);
+    transition: opacity 0.5s 1s, transform 0.5s 1s;}
+
+/* HOVER state */
+  .box:hover {
+    width: 300px;
+    background-color: orange;}
+
+  .box:hover .box__blurb {
+    opacity: 0;
+    transform: translateX(-500px);}
+
+  .box:hover .rect__blurb {
+    opacity: 1;
+    transform: translateX(-100px);}
+                    ```
+                    ]]
+
+---
+
+### Transitions
+
+.columns[.col-50[
+  ![CSS transition 1](assets/img/transition-1.gif)
+].col-50[
+  ![CSS transition 2](assets/img/transition-2.gif)
+]]
+
+---
+
+# Related resources
+- http://www.css3.info/preview
+- http://codepen.io
+- http://tympanus.net/codrops
+- http://caniuse.com
+- http://css3please.com
+- https://css-tricks.com/yay-for-hsla/
+
+    </textarea>
+<!-- ================== End of Slides ================== -->
+
+    <script src="../../assets/js/remark-latest.min.js" type="text/javascript"></script>
+    <script type="text/javascript">remark.create({highlightStyle: 'github'});</script>
+</body>
+</html>
