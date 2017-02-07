@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JS: Intro</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="../../assets/css/reset.css" rel="stylesheet" type="text/css" />
+    <link href="../../assets/css/fonts.css" rel="stylesheet" type="text/css" />
+    <link href="../../assets/css/typography.css" rel="stylesheet" type="text/css" />
+    <link href="../../assets/css/style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+<div class="wrapper">
+    <header class="mainheader">
+        <div class="logo">
+            <a href="../index.html">WEB-UI</a>
+            <a href="./">JS: Control Flow</a>
+        </div>
+    </header>
+</div>
+
+<!-- ================== Slides ================== -->
+    <textarea id="source">
+
+
+class: center, middle
+
+.title[
+Front-end training
+# Control flow
+]
+
+---
+
+# Conditional execution
+
+In conditional execution  we choose between two different routes based on a boolean value.
+
+<div id="conditional_execution"  markdown="1">
+    ![conditional_execution](assets/conditional_execution.jpeg)
+</div>
+Conditional execution is written with the `if` keyword in JavaScript. In the simple case, we just want some code to be executed `if`, and only `if`, a certain condition holds. 
+
+---
+
+
+# if, else
+
+```js
+    if ([expression]) {
+        [statement]
+    }
+
+
+    var a = 10; 
+    if (a > 3) { 
+        console.log('it is true') 
+    }
+
+
+    // don't use for complicated cases
+    if (a > 5) console.log('it is true');
+
+    var user = false;
+    if (user) {
+        console.log('hello dear user');
+    } else {
+        console.log('please signIn');
+    }
+```
+
+---
+
+
+# if, without if
+
+```js
+    var i = 1,
+        j = 5,
+        result;
+
+    // overly complicated solution
+    if (i != j) {
+        result = true;
+    } else {
+        result = false;
+    }
+
+    // gives same result
+    result = i != j;
+```
+
+---
+
+
+# Ternary
+
+```js
+
+    var salary = 90000,
+        reaction = '';
+
+    // To define reaction we can use simple if statement
+    if (salary > 50000) {
+        reaction = 'Not bad!';
+    } else {
+        reaction = 'WTF?!!';
+    }
+
+
+    // But I'd rather use this one
+    reaction = a > 50000 ? 'Not bad!' : 'WTF?!!';
+
+    // Common pitfall
+    reaction = salary > 50000 ? true : false
+```
+
+---
+
+# else if 
+Use the else if statement to specify a new condition if the first condition is false.
+
+```js
+    if(city === 'Lviv'){
+        console.log('Hi Lviv')
+    } else if (city === 'Kiev'){
+        console.log('Hi Kiev')
+    } else if(city === 'Ternopil') {
+        console.log('Hi Ternopil')
+    } else {
+        console.log('Hi Unknown city')
+    }
+```
+
+---
+
+# switch
+
+```js
+    switch (city) {
+        case 'Lviv' :
+            console.log('Hi Lviv');
+            break;
+        case 'Kiev' :
+            console.log('Hi Kiev');
+            break;
+        case 'Ternopil' :
+            console.log('Hi Ternopil');
+            break;
+        default:
+            console.log('Hi Unknown city');
+            break; 
+    }
+    
+```
+You may put any number of case labels inside the block opened by switch. The program will jump to the label that corresponds to the value that switchwas given, or to default if no matching value is found. 
+
+
+---
+
+# while
+
+```js
+    var i = 0; 
+    while (i < 10) {  
+        console.log(i);  
+        i++; 
+    } 
+    console.log(i);
+```
+
+
+---
+
+
+# do while
+
+```js
+    var i = 0; 
+    do {  
+        console.log(i);  
+        i++; 
+    } while (i < 10)
+
+
+    do {  
+        var userName = prompt("Who are you?"); 
+    } while (!userName); 
+
+    console.log(userName);
+```
+
+
+---
+
+
+# for
+
+```js
+    for ([initialization]; [test]; [increment]){ 
+        [statement] 
+    }
+
+    // the most common use
+    for (var i = 0; i < 10; i++) { 
+        console.log(i); 
+    } 
+
+    console.log(i); //10
+```
+
+---
+
+
+# break and continue
+
+```js
+    for (var i = 0; i < 10; i++) {
+
+        console.log(i);
+
+        if(i % 2 == 0) { 
+            continue; 
+        } 
+        console.log(i); 
+        if(i == 9) { 
+            break; 
+        }
+    }   
+    console.log(i); //9
+```
+
+
+
+
+    </textarea>
+    <!-- ================== End of Slides ================== -->
+
+    <script src="../../assets/js/remark-latest.min.js" type="text/javascript"></script>
+    <script type="text/javascript">remark.create({highlightStyle: 'github'});</script>
+</body>
+</html>
