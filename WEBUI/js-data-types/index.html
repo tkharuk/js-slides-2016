@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JS: Data Types & Structures</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="../../assets/css/reset.css" rel="stylesheet" type="text/css" />
+    <link href="../../assets/css/fonts.css" rel="stylesheet" type="text/css" />
+    <link href="../../assets/css/typography.css" rel="stylesheet" type="text/css" />
+    <link href="../../assets/css/style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+<div class="wrapper">
+    <header class="mainheader">
+        <div class="logo">
+            <a href="../index.html">WEB-UI</a>
+            <a href="./">JS: Data Types & Structures</a>
+        </div>
+    </header>
+</div>
+
+<!-- ================== Slides ================== -->
+<textarea id="source">
+
+
+class: center, middle
+
+.title[
+Front-end training
+# JS: Data Types & Structures
+]
+
+
+---
+
+# Value Types
+
+### Primitives
+- Number
+- String
+- Boolean
+- Undefined
+- Null
+
+### Non-Primitives
+- Object
+- Array
+- Function
+- Date
+- Math
+- ...
+
+---
+
+## Primitives
+
+Primitives are __immutable__, they cannot be changed.  
+Each change to variable will create new instance of primitive.
+
+---
+
+## Number
+
+```js
+var n1 = 5;
+
+var n2 = new Number('-5.5');
+
+var n3 = 0.1 + 0.2; // 0.30000000000000004
+
+var n4 = Infinity;
+
+var n5 = NaN;
+```
+
+---
+
+## String
+
+  ```javascript
+  var str = "";
+  var str1 = '';
+  var str2 = 'string';
+  var str3 = new String(12345);
+
+  str2.length; // 6
+  str3.chartAt(4); // '5'
+  str2[0]; // 's'
+  ```
+
+---
+
+## Boolean
+  logical entities `true` or `false`
+
+## Null
+  In computer science, `null` represents a reference that points, intentionally, to a nonexistent or invalid value.
+
+## Undefined
+  Each unassigned variable will have value `undefined`
+
+```js
+  var x;
+  x === undefined; // true
+  typeof x === 'undefined'; // true
+```
+
+---
+
+## Plain Object
+
+  ```javascript
+  var obj = { a: 1 };
+  var obj1 = new Object();
+
+  // read property
+  obj.a; // 1 
+
+  // write property
+  obj.propA = 1;
+  obj['propB'] = 1;
+
+  // delete property
+  delete obj.propA
+  delete obj.propB
+
+  ```
+
+---
+### Enumerate the properties of an object
+ there are couple of native ways to list/traverse object properties:
+### for...in 
+  ```javascript
+  var obj = {a:1, b:2, c:3};
+      
+  for (var prop in obj) {
+    console.log("obj." + prop + " = " + obj[prop]);
+  }
+  // Output:
+  // "obj.a = 1"
+  // "obj.b = 2"
+  // "obj.c = 3"
+  ```
+### Object.keys(o)
+This method returns an array with all the own  (not in the prototype chain) enumerable properties' names ("keys") of an object o. 
+```javascript
+console.log(Object.keys(obj)); // ["a", "b", "c"] 
+```
+---
+## Array
+
+  Array is a list of values with 0 based index.
+
+  ```javascript
+  var arr = [];
+
+  // array can hold any type of values
+  arr.push(1);
+  arr.push({});
+  arr.push([]);
+  arr.push(true);
+
+  arr.length; // 4
+
+  // access to values is 0 based index
+  arr[0]; // 1
+  ```
+
+---
+### indexOf() 
+Method which returns the first (least) index of an element within the array equal to the specified value, or -1  if none is found.
+```javascript
+var arr = [2, 9, 5, 9]; 
+arr.indexOf(2); // 0 
+arr.indexOf(7); // -1
+arr.indexOf(9); // 1
+
+if (a.indexOf(7) === -1) {
+  // element doesn't exist in array
+}
+```
+### join()
+Join the elements of an array into a string: 
+```javascript
+var fruits = ["Banana", "Orange", "Apple", "Mango"];
+var energy = fruits.join(); // "Banana,Orange,Apple,Mango"
+var anotherEnergy = fruits.join('+'); // "Banana+Orange+Apple+Mango"
+```
+---
+# Date
+
+```javascript
+  var date = new Date(); // current date
+  var now = Date.now(); // current date as milliseconds
+```
+https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Date
+---
+
+# Links
+
+- http://eloquentjavascript.net/04_data.html
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array
+- https://toddmotto.com/understanding-javascript-types-and-reliable-type-checking/
+- https://github.com/getify/You-Dont-Know-JS/blob/master/types%20%26%20grammar/ch2.md
+
+</textarea>
+<!-- ================== End of Slides ================== -->
+
+<script src="../../assets/js/remark-latest.min.js" type="text/javascript"></script>
+<script type="text/javascript">remark.create({highlightStyle: 'github'});</script>
+</body>
+</html>
