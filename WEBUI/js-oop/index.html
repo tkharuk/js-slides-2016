@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JS: OOP</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="../../assets/css/reset.css" rel="stylesheet" type="text/css" />
+    <link href="../../assets/css/fonts.css" rel="stylesheet" type="text/css" />
+    <link href="../../assets/css/typography.css" rel="stylesheet" type="text/css" />
+    <link href="../../assets/css/style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+<div class="wrapper">
+    <header class="mainheader">
+        <div class="logo">
+            <a href="../index.html">WEB-UI</a>
+            <a href="./">JS: OOP</a>
+        </div>
+    </header>
+</div>
+
+
+<!-- ================== Slides ================== -->
+    <textarea id="source">
+
+
+class: center, middle
+
+.title[
+Front-end training
+# Intro to OOP
+]
+
+---
+
+# OOP
+
+The OOP programming style in Javascript consist of three fundamental features:
+
+- ### Encapsulation
+A language mechanism for restricting access to some of the object's components.
+- ### Polymorphism
+Is the ability to create a variable, a function, or an object that has more than one form.
+- ### Inheritance
+Is a way to reuse code of existing objects, or to establish a subtype from an existing object, or
+both, depending upon programming language support.
+
+---
+
+# Context "this"
+
+***This*** value is called the context of the call and will be determined at the time of the function call.
+
+Function "showName" does not yet know what will be the value of ***this***. It will be known when the
+program run.
+
+```
+var user = { firstName: "Petya" };
+var admin = { firstName: "Vasya" };
+
+function showName() {
+    alert( this.firstName );
+}
+
+user.a = showName;
+user.a(); // Petya
+showName.call(admin); // Vasya
+showName(); // undefined
+```
+
+---
+
+# Context "this"
+
+There are 4 invocation patterns in JS:
+*  Method invocation
+```
+a.func(); // this refers to the object, i.e., a.
+```
+*  Function invocation
+```
+func(); // this is bond to the global object.
+```
+*  Apply invocation pattern
+```
+func.apply(thisArg, argArray); // this is bond
+                                   // to the first argument
+```
+*  Constructor invocation
+```
+var func = new Func(); // this refers to func
+                           // while in Func constructor)
+```
+
+---
+
+# Context "this"
+
+How to keep bond?
+
+```
+var init = function () {
+	var clickCounter = 0;
+
+	var that = this;
+
+	var clickHandler = function () {
+		that.clickCounter++;
+	}
+
+	var element = document.getElementById('button');
+	element.addEventListener('click', clickHandler);
+}
+```
+
+---
+
+# Constructor
+
+Constructor is a function that creates and initializes the newly created object according to the
+template.
+
+```
+function Animal(name) {
+    this.name = name;
+    this.canWalk = true;
+}
+
+var dog = new Animal("dog");
+
+
+// dog = {
+//     name: "dog",
+//     canWalk: true
+// }
+```
+
+The names of the functions that are designed to create objects, as a rule, begin with a capital letter.
+
+
+---
+
+# "Classes" in JS
+
+Objects with identical methods of behavior creates class or object type (javascript). Class retains
+constructive plan of own objects.
+
+Each object - a member of a class, is an instance of class or object.
+
+```
+    function Clock(hours, minutes) {
+        this.hours = hours;
+        this.minutes = minutes;
+        this.setTime = function(hours, minutes) {
+			this.hours = hours;
+			this.minutes = minutes;
+		}
+        this.displayTime = function () {
+			alert(this.hours + ":" + this.minutes);
+		}
+    }
+
+	var clock = new Clock(12, 30);
+	var secondClock = new Clock(11, 45);
+	clock.setTime(12, 45);
+	clock.displayTime(); // 12:45
+	secondClock.displayTime(); // 11:45
+	console.log(clock instanceof Clock); // true
+```
+
+
+
+---
+
+# "Classes" in ES6
+
+ES6 classes are a simple sugar over the prototype-based OOP pattern.
+
+```
+	class Clock {
+		constructor (hours, minutes) {
+			this.hours = hours;
+			this.minutes = minutes;
+		}
+		setTime (hours, minutes) {
+			this.hours = hours;
+			this.minutes = minutes;
+		}
+		displayTime () {
+			alert(this.hours + ":" + this.minutes);
+		}
+	}
+
+	var clock = new Clock(12, 30);
+	var secondClock = new Clock(11, 45);
+	clock.setTime(12, 45);
+	clock.displayTime(); // 12:45
+	secondClock.displayTime(); // 11:45
+	console.log(clock instanceof Clock); // true
+```
+
+
+
+---
+
+
+# Encapsulation in JS
+Encapsulation is an increasing of abstraction, but not a paranoid hiding from “malicious hackers”
+which, “want to write something directly into fields of your classes”.
+
+It is a big (and widespread) mistake to use hiding for the sake of hiding.
+ECMAScript 5, does not define private, protected, and private modifiers how it is in other OOP languages.
+However, on practice it is possible to see something that is named “imitation of encapsulation in JS”.
+
+```
+	function Clock(hours, minutes) {
+		var _hours = hours;
+		var _minutes = minutes;
+
+		this.setHours(hours) {
+			_hours = hours;
+		}
+
+		this.getHours() {
+			return _hours;
+		}
+	}
+    var clock = new Clock(12, 30);
+    alert(clock._hours); // undefined, "private"
+    alert(clock.getHours()); // 12
+```
+
+---
+
+# Polymorphism in JS
+
+Objects in ECMAScript are polymorphic in several meanings.
+
+For example, one function can be applied to different objects, just like it would be the native
+characteristic of an object (because *** this *** value determinate on entering the execution context):
+
+```
+function test(o) {
+    alert(this.a, this.b);
+}
+
+var o1 = {a: 10, b: 20};
+var o2 = {a: 100, b: 200};
+
+test.call(o1); // 10, 20
+test.call(o2); // 100, 200
+
+var a = 1;
+var b = 2;
+test(); // 1, 2
+```
+
+---
+
+
+# OOP
+
+Javascript (ECMAScript) is the *** object-oriented *** programming language with the *** prototype
+based*** implementation.
+
+*** Prototype *** is an object, which is used either as an original copy for other objects, or as a
+helper object to which characteristics other objects can delegate in case if these objects do
+not have the necessary characteristic themselves.
+
+*** Mutations *** (full convertibility: not only values, but also all of characteristics) are directly
+related with dynamics of the language.
+    Such objects can independently store all their characteristics (properties, methods) and do
+not need the class.
+
+Moreover, because of dynamics, they can easily change (add, delete, modify) their
+characteristics.
+
+---
+
+
+---
+
+- https://www.youtube.com/watch?v=Qn3Qah7W6Vs&feature=youtu.be
+
+</textarea>
+<!-- ================== End of Slides ================== -->
+
+    <script src="../../assets/js/remark-latest.min.js" type="text/javascript"></script>
+    <script type="text/javascript">remark.create({ highlightStyle: 'github', highlightLanguage: 'javascript' });</script>
+</body>
+</html>
