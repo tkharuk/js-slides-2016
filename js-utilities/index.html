@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JS Utilities</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="../assets/css/reset.css" rel="stylesheet" type="text/css" />
+    <link href="../assets/css/fonts.css" rel="stylesheet" type="text/css" />
+    <link href="../assets/css/typography.css" rel="stylesheet" type="text/css" />
+    <link href="../assets/css/style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<div class="wrapper">
+  <header class="mainheader">
+    <div class="logo">
+      <a href=""><span class="logotext">Utilities</span></a>
+    </div>
+  </header>
+</div>
+
+<!-- ================== Slides ================== -->
+    <textarea id="source">
+
+class: center, middle
+
+.title[
+# _
+]
+
+
+
+
+
+---
+# What are utilities
+
+In computers, a utility is a small program that provides an addition to the capabilities provided by the operating system.  
+<br />
+--
+A utility class is a class that defines a set of methods that perform common, often re-used functions
+
+
+
+
+
+---
+# Most popular libraries!!
+
+- http://prototypejs.org (02.2005 - 22.09.2015)
+- http://yuilibrary.com (13.02.2006 - 22.11.2014)
+- http://jquery.com (26.08.2006)
+- http://mootools.net (07.03.2007)
+- http://developers.google.com/closure/library (05.11.2009)
+
+
+
+???
+all popular libraries have utility functions used internally
+
+
+
+
+
+---
+# Utility libraries
+
+- http://bitsrc.io (★592)
+- http://moutjs.com (★746)
+- http://github.com/tjmehta/101 (★1498)
+- http://sugarjs.com (★3323)
+- http://danieltao.com/lazy.js (★4156)
+- http://underscorejs.org (★20739)
+- http://lodash.com (★23748)
+
+
+
+
+
+---
+### Problem: access deeply nested properties
+???
+- lots of nesting means lots of checks  
+- not simply STRING but a concept of PATH  
+- _.set - mutates initial object
+--
+
+```
+var user = {
+    name: 'John',
+    companies: [{
+        name: 'Cisco', created: { date: 'December 10, 1984' }
+    }, ...]
+};
+
+{{content}}
+```
+
+--
+var date = _.get( user, `'companies[0].created.date'` );  // "December 10, 1984"
+  
+{{content}}
+
+--
+var updatedUser = _.set( user, 'companies[0].created.founder', 'Leonard Bosack' );
+  
+{{content}}
+
+--
+console.log( user === updatedUser ); // true
+
+--
+[Demo](http://jsbin.com/zomaguzaza/1/edit?js,console)
+
+
+
+
+
+---
+### Problem: find an object in a collection
+
+```
+var users = [{ id: 1, name: 'John' }, ...];
+var userId = 1;
+  
+{{content}}
+```
+
+--
+var currentUser = _.find( users, `{ id: userId }` );
+
+--
+[Demo](http://jsbin.com/yubocozune/1/edit?js,console)
+
+
+
+
+
+---
+### Problem: cut away unnecessary data to work with
+???
+- need to cut data for not applying all properties or to save on bandwidth.  
+- there is no need to send updatedDate since backend is the one to write that property not FE  
+- array of PATHS!
+--
+
+```
+var book = {
+    id: 0,
+    title: 'Lord of the Pigs',
+    author: 'Twinkie',
+    updatedDate: 'June 10, 1908'
+};
+
+{{content}}
+```
+
+--
+var data = _.pick( book, [ 'id', 'author' ] );
+
+{{content}}
+
+--
+var data2 = _.omit( book, [ 'title', 'updatedDate' ] );
+
+JSON.stringify( data ) === JSON.stringify( data2 );  // true
+
+--
+[Demo](http://jsbin.com/yubuzamata/1/edit?js,console)
+
+
+
+
+
+---
+### Problem: show unique properties of entities
+
+???
+- tag cloud  
+- uniq with array, not collections - SameValueZero
+- map with PATH
+- remove all values that we probably don't need -> after split, trim for arrays
+--
+
+
+```
+var items = [
+    { id: 0, type: 'file' },
+    { id: 1, type: 'image' },
+    { id: 2, type: 'text' },
+    { id: 3, type: 'file' },
+    { id: 4, type: '' }
+];
+
+{{content}}
+```
+
+--
+var uniqs =  _.uniq( _.map(items, 'type') );  {{content}}
+
+--
+// ["file", "image", "text", ""]  
+  
+{{content}}
+
+--
+var labels = _.compact(uniqs).join(', ');  // "file, image, text"
+
+--
+[Demo](http://jsbin.com/domayoroti/edit?js,console)
+
+
+
+
+---
+### Problem: detect what have been changed in arrays
+
+???
+- state systems -> added/removed?
+- array values not included in the other given arrays
+--
+
+```
+var oldTags = [ 'js', 'css' ];
+var newTags = [ 'html', 'css' ];
+
+{{content}}
+```
+
+--
+var addedTags = _.difference( newTags, oldTags );  // ["html"]
+
+{{content}}
+
+--
+var removedTags = _.difference( oldTags, `newTags` );  // ["js"]
+
+--
+[Demo](http://jsbin.com/fiqilamuci/edit?js,console)
+
+
+
+
+
+---
+### Problem: remove object from collection
+
+```
+var options = [ 'orange', 'pineapple', 'applepen', 'orange' ];
+
+var bannedFruit = 'orange';
+
+{{content}}
+```
+
+--
+var allowedFruits = _.without( options, bannedFruit );  // ["pineapple", "applepen"]
+
+--
+[Demo](http://jsbin.com/gezuqopifu/edit?js,console)
+
+
+
+
+---
+### Problem: check whether item is in collection
+
+```
+var selectedItemsIDs = [1, 2, 3, 4];
+var currentItemID = 3;
+
+var isSelected = {{content}}
+```
+
+--
+_.includes( selectedItemsIDs, currentItemID ); // true
+
+--
+[Array.prototype.includes](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Array/includes)
+
+
+
+
+
+---
+### Problem: check data and types
+
+???
+- not a secret js has some slight issues with types
+- because these are functions we can use them as 'predicate'
+
+--
+```
+var isNaN = NaN === NaN; // false
+```
+
+--
+```
+_.isFunction
+_.isEmpty
+_.isBoolean
+_.isNil
+_.isInteger
+_.isNaN
+...
+```
+
+--
+```
+var onlyBooleans = [ 1, true, 'true', false ].filter( _.isBoolean ); // [true, false]
+```
+
+
+---
+### Problem: layout with dynamic calculations lags on window resize
+
+???
+- scroll, resize, input events fire too often
+- remember previous results
+
+--
+```
+window.addEventListener( 'resize', _.throttle( recalculateLayout, 200 ) );
+
+{{content}}
+```
+
+--
+function recalculateLayout() {
+    ...
+    return _.memoize( windowWidth, getSizeMatrix );
+}
+
+
+
+
+
+---
+### Task: sort items differently depending on its properties
+> Items in progress should be sorted by priority, while completed items should be at bottom with most recently resolved first.  
+
+--
+
+```
+Item = {
+    active: true;
+    priority: number;
+    resolvedDaysAgo: number;
+}
+```
+
+--
+
+```
+import { partition, orderBy } from 'lodash';
+
+let [ inProgress, completed ] = partition( items, 'active' );
+
+{{content}}
+```
+
+--
+return [].concat(
+    orderBy( inProgress, 'priority', 'desc' ),
+    orderBy( completed, 'resolvedDaysAgo' )
+);
+
+
+
+
+
+---
+### Problem: too many utilities nesting ))))))
+
+???
+- ) are not smiles but line endings, nested functions, lisp
+- nesting to chains
+- chain -> object wrapper, similar to what jquery does for chaining
+
+--
+```
+let fileFormats = uniq( compact ( flatten ( map( assets, 'format' ))));
+```
+
+--
+```
+let fileFormats = `chain( assets )`
+    {{content}}
+```
+
+--
+.map( 'format' )
+    {{content}}
+
+--
+.flatten()
+    {{content}}
+
+--
+.compact()
+    {{content}}
+
+--
+.uniq()
+    {{content}}
+
+--
+.`value()`;
+
+
+
+
+
+---
+
+### Going deeper into functional utilities
+
+- http://rpominov.github.io/kefir (★1255)
+- http://baconjs.github.io (★5669)
+- http://ramdajs.com (★8213)
+- http://reactivex.io/rxjs (★6512, 16k in old repo)
+
+---
+
+class: center, middle
+
+# Thank You!
+### Questions?
+
+
+    </textarea>
+<!-- ================== End of Slides ================== -->
+
+    <script src="../assets/js/remark-latest.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+      remark.create({
+        highlightStyle: 'github',
+        highlightLanguage: 'javascript',
+        highlightLines: true,
+        highlightSpans: true,
+        countIncrementalSlides: false
+      });
+    </script>
+</body>
+</html>

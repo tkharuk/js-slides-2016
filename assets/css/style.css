@@ -49,6 +49,13 @@ li > pre {
 dd {
     padding: 5px;
 }
+blockquote {
+    margin-left: 1rem;
+    padding-left: 1rem;
+    border-left: 2px solid var(--headlines-color);
+    font-style: italic;
+}
+
 .wrapper .mainheader {
     height: 58px;
     background-color: var(--headlines-background-color);
