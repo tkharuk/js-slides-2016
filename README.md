@@ -1,2 +1,2 @@
 # presentations
-misc presentations - http://tuxujpes.github.io/presentations
+misc presentations - http://tkharuk.github.io/presentations
